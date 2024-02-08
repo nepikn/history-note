@@ -1,35 +1,22 @@
-# template-vite-js-tailwind-v3
+# 
 
-- **template of:** vite + vanilaJS
-- **tailwindcss:** v3.x
 
-## Started
+## 展示
 
-```bash
-yarn
-# or `npm install`
+![screenshot](/screenshot.jpg)
+
+[Live Demo]()
+
+## 學習內容
+
+### 
+
+```js
+
 ```
 
----
+- 
 
-## Develop
+## 相關資源
 
-```bash
-yarn dev
-# or `npm run dev`
-```
-
----
-
-## Build
-
-```bash
-yarn build
-# or `npm run build`
-```
-
----
-
-<p align="center">
-<img src="./powered-by-vitawind-bright.png">
-</p>
+- []()
