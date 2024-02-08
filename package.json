@@ -11,5 +11,9 @@
     "prettier-plugin-tailwindcss": "latest",
     "vitawind": "latest",
     "vite": "latest"
+  },
+  "dependencies": {
+    "localforage": "^1.10.0",
+    "uuid": "^9.0.1"
   }
 }
