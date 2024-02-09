@@ -1,62 +1,52 @@
-import "./index.css";
-import { getNotes, addNote, delNote } from "./note";
+import localforage from "localforage";
+import { handleHistoryState } from "./history";
+import { addNote, delNote, setupNoteDb } from "./note";
+import { getNoteId, render } from "./render";
+import "./style/index.css";
 
-const appName = "localStorage-note";
-
-document.querySelector("title").innerText = appName
+document.querySelector("title").innerText = import.meta.env.BASE_URL.slice(1)
   .split("-")
   .map((s) => s[0].toUpperCase() + s.slice(1))
   .join(" ");
 
 (async function init() {
-  let notes = await getNotes();
-
-  if (!notes) {
-    await addNote();
-  }
-
+  window.onpopstate = handleHistoryChange;
+  document.onclick = handleLinkClick;
   document.querySelector(".add").onclick = handleAddNote;
   document.querySelector(".del").onclick = handleDelNote;
   document.querySelector("textarea").oninput = handleTextareaInput;
 
-  updateTextarea(Object.keys(notes)[0]);
-  updateNav();
+  // localforage.clear();
+  const noteId = await setupNoteDb();
+
+  handleHistoryChange({ noteId }, "replaceState");
 })();
 
+function handleLinkClick(e) {
+  const href = e.target.href;
+  if (!href) return;
+
+  e.preventDefault();
+
+  handleHistoryChange({ noteId: getNoteId(href) });
+}
+
 async function handleAddNote() {
-  updateTextarea(await addNote());
-  updateNav();
+  handleHistoryChange({ noteId: await addNote() });
 }
 
 async function handleDelNote() {
-  updateTextarea(await delNote(document.querySelector("textarea").id));
-  updateNav();
+  const nextNotes = await delNote(getNoteId());
+  handleHistoryChange({ noteId: nextNotes[0].id });
+}
+
+function handleHistoryChange(eventOrState, method = "pushState") {
+  render(eventOrState.state ?? eventOrState);
+
+  if (eventOrState instanceof PopStateEvent) return;
+  handleHistoryState(eventOrState, method);
 }
 
 async function handleTextareaInput(e) {
-  await addNote(e.target.value, e.target.id);
-}
-
-async function updateTextarea(noteId) {
-  const textarea = document.querySelector("textarea");
-  const notes = await getNotes();
-
-  textarea.id = noteId;
-  textarea.value = notes[noteId];
-}
-
-async function updateNav() {
-  document.querySelector("nav").replaceChildren(
-    ...Object.keys(await getNotes()).map((id) => {
-      const btn = document.createElement("button");
-
-      btn.id = id;
-      btn.append(id);
-      btn.onclick = (e) => {
-        updateTextarea(e.target.id);
-      };
-
-      return btn;
-    })
-  );
+  await addNote({ id: getNoteId(), text: e.target.value });
 }

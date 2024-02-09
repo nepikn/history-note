@@ -1,23 +1,16 @@
 import localforage from "localforage";
 import { v4 } from "uuid";
 
-export async function addNote(text = "", noteId = v4()) {
-  await setNotes({
-    ...(await getNotes()),
-    [noteId]: text,
-  });
+export async function addNote(note = { id: v4(), text: "" }) {
+  await setNotes((await delNote(note.id)).concat(note));
 
-  return noteId;
+  return note.id;
 }
 
 export async function delNote(noteId) {
-  const nextNotes = { ...(await getNotes()) };
-
-  delete nextNotes[noteId];
-
-  await setNotes(nextNotes);
-
-  return Object.keys(nextNotes)[0];
+  const nextNotes = (await getNotes()).filter(({ id }) => id != noteId);
+  setNotes(nextNotes)
+  return nextNotes;
 }
 
 export function getNotes() {
@@ -26,4 +19,11 @@ export function getNotes() {
 
 export async function setNotes(notes) {
   localforage.setItem("notes", notes);
+  return notes;
+}
+
+export async function setupNoteDb() {
+  const notes = (await getNotes()) ?? (await setNotes([]));
+  const noteId = notes && notes.length ? notes[0].id : await addNote();
+  return noteId;
 }

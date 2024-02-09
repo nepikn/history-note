@@ -5,3 +5,12 @@
 a {
   @apply text-blue-500 hover:text-blue-400 hover:underline transition-all;
 } */
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+a.active {
+  outline: 2px solid sienna;
+}
