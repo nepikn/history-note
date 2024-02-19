@@ -19,6 +19,7 @@ function updateTextarea(note) {
   } else {
     textarea.value = text;
     textarea.disabled = false;
+    textarea.focus();
   }
 }
 
