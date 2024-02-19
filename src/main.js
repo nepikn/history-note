@@ -1,7 +1,8 @@
 import localforage from "localforage";
 import { handleHistoryState } from "./history";
 import { addNote, delNote, setupNoteDb } from "./note";
-import { getNoteId, render } from "./render";
+import { render } from "./render";
+import { getNoteId } from "./history";
 import "./style/index.css";
 
 document.querySelector("title").innerText = import.meta.env.BASE_URL.slice(1)
@@ -10,7 +11,7 @@ document.querySelector("title").innerText = import.meta.env.BASE_URL.slice(1)
   .join(" ");
 
 (async function init() {
-  window.onpopstate = handleHistoryChange;
+  window.onpopstate = ({ state }) => handleHistoryChange(state, null);
   document.onclick = handleLinkClick;
   document.querySelector(".add").onclick = handleAddNote;
   document.querySelector(".del").onclick = handleDelNote;
@@ -40,13 +41,13 @@ async function handleDelNote() {
   handleHistoryChange({ noteId: nextNotes[0].id });
 }
 
-function handleHistoryChange(eventOrState, method = "pushState") {
-  render(eventOrState.state ?? eventOrState);
-
-  if (eventOrState instanceof PopStateEvent) return;
-  handleHistoryState(eventOrState, method);
-}
-
 async function handleTextareaInput(e) {
   await addNote({ id: getNoteId(), text: e.target.value });
+}
+
+function handleHistoryChange(state, method = "pushState") {
+  render(state);
+
+  if (method === null) return;
+  handleHistoryState(state, method);
 }

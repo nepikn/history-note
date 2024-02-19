@@ -1,3 +1,4 @@
+import { getNoteId, getPageUrl } from "./history";
 import { getNotes } from "./note";
 
 export async function render({ noteId }) {
@@ -10,9 +11,15 @@ export async function render({ noteId }) {
 
 function updateTextarea(note) {
   const textarea = document.querySelector("textarea");
+  const text = note?.text;
 
-  textarea.value = note?.text;
-  textarea.disabled = note?.text == undefined;
+  if (text == undefined) {
+    textarea.value = "Note not found, might have been deleted.";
+    textarea.disabled = true;
+  } else {
+    textarea.value = text;
+    textarea.disabled = false;
+  }
 }
 
 function updateNav(notes) {
@@ -20,11 +27,11 @@ function updateNav(notes) {
   const curNoteId = getNoteId();
 
   nav.replaceChildren(
-    ...notes.map(({ id: noteId }) => {
+    ...notes.map(({ id: noteId, text }) => {
       const link = document.createElement("a");
 
-      link.href = `${import.meta.env.BASE_URL}/${noteId}`;
-      link.append(noteId);
+      link.href = getPageUrl(noteId);
+      link.innerText = text || "(empty)";
       link.className = noteId == curNoteId ? "active" : "";
 
       return link;
@@ -32,8 +39,4 @@ function updateNav(notes) {
   );
 
   document.querySelector(".del").disabled = nav.children.length == 1;
-}
-
-export function getNoteId(pathname = location.pathname) {
-  return pathname.match(/[^\/]*$/)[0];
 }
