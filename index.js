@@ -1,14 +1,9 @@
 import localforage from "localforage";
-import { handleHistoryState } from "./history";
-import { addNote, delNote, setupNoteDb } from "./note";
-import { render } from "./render";
-import { getNoteId } from "./history";
-import "./style/index.css";
-
-document.querySelector("title").innerText = import.meta.env.BASE_URL.slice(1)
-  .split("-")
-  .map((s) => s[0].toUpperCase() + s.slice(1))
-  .join(" ");
+import { handleHistoryState } from "./src/history";
+import { addNote, delNote, setupNoteDb } from "./src/note";
+import { render } from "./src/render";
+import { getNoteId } from "./src/history";
+import "./src/style/index.css";
 
 (async function init() {
   window.onpopstate = ({ state }) => handleHistoryChange(state, null);
