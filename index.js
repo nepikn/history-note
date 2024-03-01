@@ -3,7 +3,7 @@ import { handleHistoryState } from "./src/history";
 import { addNote, delNote, setupNoteDb } from "./src/note";
 import { render } from "./src/render";
 import { getNoteId } from "./src/history";
-import "./src/style/index.css";
+import "./src/style/index.scss";
 
 (async function init() {
   window.onpopstate = ({ state }) => handleHistoryChange(state, null);

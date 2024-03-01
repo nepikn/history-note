@@ -1,3 +1,4 @@
+import autoprefixer from "autoprefixer";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { resolve } from "node:path";
 
@@ -8,14 +9,25 @@ export default {
     filename: "[name].bundle.js",
     path: resolve(process.cwd(), `dist/${projectName}`),
     clean: true,
-    publicPath: projectName,
+    publicPath: `/${projectName}`,
   },
   module: {
     rules: [
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
       {
         test: /\.m?js$/,
         resolve: { fullySpecified: false },
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: { postcssOptions: { plugins: [autoprefixer] } },
+          },
+          "sass-loader",
+        ],
       },
     ],
   },
@@ -30,7 +42,7 @@ export default {
     }),
   ],
   devtool: "inline-source-map",
-  devServer: { static: "dist", watchFiles: "src/**/*" },
+  devServer: { static: "dist", watchFiles: "src/**/*", open: projectName },
   optimization: { runtimeChunk: "single" },
   mode: "production",
 };
