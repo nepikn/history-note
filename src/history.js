@@ -5,7 +5,7 @@ export function handleHistoryState(state, method) {
 export function getPageUrl(noteId) {
   const search = new URLSearchParams();
   search.append("id", noteId);
-  return `?${search}`;
+  return `${location.pathname}?${search}`;
 }
 
 export function getNoteId(url = document.location) {

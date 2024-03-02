@@ -14,7 +14,7 @@ function updateTextarea(note) {
   const text = note?.text;
 
   if (text == undefined) {
-    textarea.value = "Note not found, might have been deleted.";
+    textarea.value = "Not found (might have been deleted)";
     textarea.disabled = true;
   } else {
     textarea.value = text;
