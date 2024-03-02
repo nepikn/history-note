@@ -6,8 +6,8 @@ const projectName = "online-note";
 export default {
   entry: "./index.js",
   output: {
-    filename: "[name].bundle.js",
-    path: resolve(process.cwd(), `dist/${projectName}`),
+    // filename: "[name].bundle.js",
+    // path: resolve(process.cwd(), `dist/${projectName}`),
     clean: true,
     publicPath: `/${projectName}`,
   },
