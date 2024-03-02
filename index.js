@@ -1,8 +1,6 @@
-import localforage from "localforage";
-import { handleHistoryState } from "./src/history";
+import { getNoteId, handleHistoryState } from "./src/history";
 import { addNote, delNote, setupNoteDb } from "./src/note";
 import { render } from "./src/render";
-import { getNoteId } from "./src/history";
 import "./src/style/index.scss";
 
 (async function init() {
@@ -13,7 +11,7 @@ import "./src/style/index.scss";
   document.querySelector("textarea").oninput = handleTextareaInput;
 
   // localforage.clear();
-  const noteId = await setupNoteDb();
+  const noteId = getNoteId() || await setupNoteDb();
 
   handleHistoryChange({ noteId }, "replaceState");
 })();
