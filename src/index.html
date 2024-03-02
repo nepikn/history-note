@@ -1,20 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta name="charset" content="UTF-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
-    <div id="app" class="">
-      <div class="">
-        <h1>Online Note</h1>
-        <fieldset class="">
-          <button class="add">Add</button>
-          <button class="del">Del</button>
+    <div id="app" class="d-flex flex-column p-5">
+      <h1>Online Note</h1>
+      <nav class="navbar mt-3 gap-2">
+        <ul class="nav nav-tabs flex-grow-1"></ul>
+        <fieldset class="btn-group">
+          <button class="btn btn-outline-primary add">Add</button>
+          <button class="btn btn-outline-primary del">Delete</button>
         </fieldset>
-      </div>
-      <nav></nav>
-      <textarea class=""></textarea>
+        <template>
+          <li class="nav-item">
+            <a class="nav-link"></a>
+          </li>
+        </template>
+      </nav>
+      <textarea class="px-2"></textarea>
     </div>
   </body>
 </html>

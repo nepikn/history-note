@@ -27,15 +27,18 @@ function updateNav(notes) {
   const nav = document.querySelector("nav");
   const curNoteId = getNoteId();
 
-  nav.replaceChildren(
+  nav.querySelector("ul").replaceChildren(
     ...notes.map(({ id: noteId, text }) => {
-      const link = document.createElement("a");
+      const temp = nav.querySelector("template").content.cloneNode(true);
+      const link = temp.querySelector("a");
 
       link.href = getPageUrl(noteId);
       link.innerText = text || "(empty)";
-      link.className = noteId == curNoteId ? "active" : "";
+      if (noteId == curNoteId) {
+        link.classList.add("active");
+      }
 
-      return link;
+      return temp;
     })
   );
 
