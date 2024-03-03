@@ -3,7 +3,8 @@ import { v4 } from "uuid";
 
 export async function setupNoteDb() {
   const notes = (await getNotes()) ?? (await setNotes([]));
-  const noteId = notes[0]?.id ?? await addNote();
+  const noteId = notes[0]?.id ?? (await addNote());
+
   return noteId;
 }
 
@@ -13,9 +14,25 @@ export async function addNote(note = { id: v4(), text: "" }) {
   return note.id;
 }
 
+export async function getNote(noteId) {
+  return (await getNotes()).find(({ id }) => id == noteId);
+}
+
+export async function editNote({ id: noteId, text }) {
+  const nextNotes = (await getNotes()).map((note) =>
+    note.id == noteId ? { id: noteId, text } : note
+  );
+
+  await setNotes(nextNotes);
+
+  return nextNotes;
+}
+
 export async function delNote(noteId) {
   const nextNotes = (await getNotes()).filter(({ id }) => id != noteId);
-  await setNotes(nextNotes)
+
+  await setNotes(nextNotes);
+
   return nextNotes;
 }
 

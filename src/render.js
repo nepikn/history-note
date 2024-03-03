@@ -1,17 +1,13 @@
-import { getNoteId, getPageUrl } from "./history";
-import { getNotes } from "./note";
+import { getSearchNoteId, getPageUrl } from "./history";
+import { getNote, getNotes } from "./note";
 
 export async function render({ noteId }) {
-  const notes = await getNotes();
-  const note = notes.find(({ id }) => id == noteId);
-
-  updateTextarea(note);
-  updateNav(notes);
+  updateTextarea((await getNote(noteId))?.text);
+  updateNav(await getNotes());
 }
 
-function updateTextarea(note) {
+function updateTextarea(text) {
   const textarea = document.querySelector("textarea");
-  const text = note?.text;
 
   if (text == undefined) {
     textarea.value = "Not found (might have been deleted)";
@@ -25,7 +21,7 @@ function updateTextarea(note) {
 
 function updateNav(notes) {
   const nav = document.querySelector("nav");
-  const curNoteId = getNoteId();
+  const curNoteId = getSearchNoteId();
 
   nav.querySelector("ul").replaceChildren(
     ...notes.map(({ id: noteId, text }) => {

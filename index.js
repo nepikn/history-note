@@ -1,5 +1,6 @@
-import { getNoteId, handleHistoryState } from "./src/history";
-import { addNote, delNote, setupNoteDb } from "./src/note";
+import localforage from "localforage";
+import { getSearchNoteId, handleHistoryState } from "./src/history";
+import { addNote, delNote, editNote, setupNoteDb } from "./src/note";
 import { render } from "./src/render";
 import "./src/style/index.scss";
 
@@ -11,7 +12,9 @@ import "./src/style/index.scss";
   document.querySelector("textarea").oninput = handleTextareaInput;
 
   // localforage.clear();
-  const noteId = getNoteId() || await setupNoteDb();
+  const firstId = await setupNoteDb();
+  const searchId = getSearchNoteId();
+  const noteId = searchId ?? firstId;
 
   handleHistoryChange({ noteId }, "replaceState");
 })();
@@ -22,7 +25,7 @@ function handleLinkClick(e) {
 
   e.preventDefault();
 
-  handleHistoryChange({ noteId: getNoteId(href) });
+  handleHistoryChange({ noteId: getSearchNoteId(href) });
 }
 
 async function handleAddNote() {
@@ -30,12 +33,15 @@ async function handleAddNote() {
 }
 
 async function handleDelNote() {
-  const nextNotes = await delNote(getNoteId());
+  const nextNotes = await delNote(getSearchNoteId());
   handleHistoryChange({ noteId: nextNotes[0].id });
 }
 
 async function handleTextareaInput(e) {
-  await addNote({ id: getNoteId(), text: e.target.value });
+  const noteId = getSearchNoteId();
+
+  await editNote({ id: noteId, text: e.target.value });
+  render({ noteId });
 }
 
 function handleHistoryChange(state, method = "pushState") {

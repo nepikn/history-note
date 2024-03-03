@@ -8,6 +8,6 @@ export function getPageUrl(noteId) {
   return `?${search}`;
 }
 
-export function getNoteId(url = document.location) {
+export function getSearchNoteId(url = document.location) {
   return new URL(url).searchParams.get("id");
 }
