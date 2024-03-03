@@ -2,7 +2,12 @@ import localforage from "localforage";
 import { v4 } from "uuid";
 
 export async function setupNoteDb() {
-  const notes = (await getNotes()) ?? (await setNotes([]));
+  const notes =
+    (await getNotes()) ??
+    (await setNotes([
+      { id: v4(), text: "<b>ootstrap</b>" },
+      { id: v4(), text: "" },
+    ]));
   const noteId = notes[0]?.id ?? (await addNote());
 
   return noteId;
