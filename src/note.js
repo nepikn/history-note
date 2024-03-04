@@ -5,7 +5,7 @@ export async function setupNoteDb() {
   const notes =
     (await getNotes()) ??
     (await setNotes([
-      { id: v4(), text: "<b>ootstrap</b>" },
+      { id: v4(), text: "(. ❛ ᴗ ❛.)\n" },
       { id: v4(), text: "" },
     ]));
   const noteId = notes[0]?.id ?? (await addNote());

@@ -21,7 +21,6 @@ function updateTextarea(text) {
 
 function updateNav(notes) {
   const nav = document.querySelector("nav");
-  const curNoteId = getSearchNoteId();
 
   nav.querySelector("ul").replaceChildren(
     ...notes.map(({ id: noteId, text }) => {
@@ -29,8 +28,8 @@ function updateNav(notes) {
       const link = temp.querySelector("a");
 
       link.href = getPageUrl(noteId);
-      link.innerText = text || "(empty)";
-      if (noteId == curNoteId) {
+      link.innerText = text.match(/.+/)?.at(0) ?? "(empty)";
+      if (noteId == getSearchNoteId()) {
         link.classList.add("active");
       }
 
@@ -38,5 +37,5 @@ function updateNav(notes) {
     })
   );
 
-  document.querySelector(".del").disabled = nav.children.length == 1;
+  nav.querySelector(".del").disabled = notes.length == 1;
 }

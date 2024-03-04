@@ -60,7 +60,7 @@ const developmentConfig = {
     publicPath,
   },
   devServer: { static: "dist", watchFiles: "src/**/*", open: projectName },
-  devtool: "inline-source-map",
+  // devtool: "inline-source-map",
 };
 
 export default (env, args) => {

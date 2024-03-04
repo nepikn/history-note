@@ -7,7 +7,7 @@
   <body>
     <div id="app" class="p-5">
       <h1><%= htmlWebpackPlugin.options.title %></h1>
-      <nav class="navbar mt-3 gap-2">
+      <nav class="navbar flex-nowrap mt-3 gap-2">
         <ul class="nav nav-tabs flex-grow-1"></ul>
         <fieldset class="btn-group">
           <button class="btn btn-outline-primary add">Add</button>
@@ -18,11 +18,10 @@
             <a
               class="nav-link"
               style="
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
+                white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                max-width: 10em;
               "
             ></a>
           </li>
