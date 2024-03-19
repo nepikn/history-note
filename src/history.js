@@ -4,8 +4,11 @@ export function handleHistoryState(state, method) {
 
 export function getPageUrl(noteId) {
   const query = new URLSearchParams();
+  const pathname = location.pathname;
+
   query.set("id", noteId);
-  return `?${query}`;
+
+  return `${pathname.endsWith("/") ? pathname.slice(0, -1) : pathname}?${query}`;
 }
 
 export function getUrlQueryNoteId(url = document.location) {

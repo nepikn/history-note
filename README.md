@@ -106,7 +106,7 @@ export function getUrlQueryNoteId(url = document.location) {
 - 模組引入
   - `resolve.modules` 作為模組搜尋的路徑預設為 `['node_modules']`
   - 缺乏副檔名的模組路徑以 `resolve.extensions`（預設為 `['.js', '.json', '.wasm']`）作為副檔名
-  - `resolve.fullySpecified` 預設為 `true` 故預設中在 ECMAScript 模組**無法**省略「模組引入路徑的副檔名」
+  - `resolve.fullySpecified` 預設為 `true` 故在 ECMAScript 模組中**預設無法**省略「模組引入路徑的副檔名」
 
 ## 相關資源
 
