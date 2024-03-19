@@ -60,9 +60,9 @@ export function handleHistoryState(state, method) {
 }
 
 export function getPageUrl(noteId) {
-  const search = new URLSearchParams();
-  search.set("id", noteId);
-  return `?${search}`;
+  const query = new URLSearchParams();
+  query.set("id", noteId);
+  return `?${query}`;
 }
 
 export function getUrlQueryNoteId(url = document.location) {
@@ -90,13 +90,13 @@ export function getUrlQueryNoteId(url = document.location) {
 ### Webpack
 
 - 轉譯 `import` 和 `export`
-- 以下為模組之間依賴關係的界定依據：
+- 以下為模組之間依賴關係的界定依據
   - `import`
   - `require()`
   - `@import`
   - `url()`
   - `<img src=... />`
-- 以下為原生支援的模組類型：
+- 以下為原生支援的模組類型
   - ECMAScript 模組
   - CommonJS 模組
   - AMD 模組
