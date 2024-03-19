@@ -7,6 +7,24 @@ const projectName = basename(process.cwd());
 const publicPath = `/${projectName}`;
 console.log(projectName);
 
+const productionConfig = {
+  mode: "production",
+  output: {
+    publicPath,
+  },
+};
+
+const developmentConfig = {
+  mode: "development",
+  output: {
+    path: resolve("dist", projectName),
+    clean: true,
+    publicPath,
+  },
+  devServer: { static: "dist", watchFiles: "src/**/*", open: projectName },
+  // devtool: "inline-source-map",
+};
+
 const commonConfig = {
   entry: "./index.js",
   plugins: [
@@ -43,24 +61,6 @@ const commonConfig = {
       },
     ],
   },
-};
-
-const productionConfig = {
-  mode: "production",
-  output: {
-    publicPath,
-  },
-};
-
-const developmentConfig = {
-  mode: "development",
-  output: {
-    path: resolve("dist", projectName),
-    clean: true,
-    publicPath,
-  },
-  devServer: { static: "dist", watchFiles: "src/**/*", open: projectName },
-  // devtool: "inline-source-map",
 };
 
 export default (env, args) => {

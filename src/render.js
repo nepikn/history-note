@@ -1,4 +1,4 @@
-import { getSearchNoteId, getPageUrl } from "./history";
+import { getUrlQueryNoteId, getPageUrl } from "./history";
 import { getNote, getNotes } from "./note";
 
 export async function render({ noteId }) {
@@ -29,7 +29,7 @@ function updateNav(notes) {
 
       link.href = getPageUrl(noteId);
       link.innerText = text.match(/.+/)?.at(0) ?? "(empty)";
-      if (noteId == getSearchNoteId()) {
+      if (noteId == getUrlQueryNoteId()) {
         link.classList.add("active");
       }
 

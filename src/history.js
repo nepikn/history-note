@@ -4,10 +4,10 @@ export function handleHistoryState(state, method) {
 
 export function getPageUrl(noteId) {
   const search = new URLSearchParams();
-  search.append("id", noteId);
+  search.set("id", noteId);
   return `?${search}`;
 }
 
-export function getSearchNoteId(url = document.location) {
+export function getUrlQueryNoteId(url = document.location) {
   return new URL(url).searchParams.get("id");
 }
