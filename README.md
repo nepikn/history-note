@@ -1,12 +1,18 @@
 # History API Webpack Note
 
-藉由 History API 實現「上、下一頁切換筆記」，並以 Webpack 打包。
+藉由 History API 實現「上／下一頁切換筆記」，並以 Webpack 打包。
+
+## 預期功能
+- 在上／下一頁之間切換筆記
+- 在筆記清單之間切換筆記
+- 增／減筆記
+- 保留網頁關閉前的筆記
 
 ## 展示
 
-![screenshot](https://github.com/nepikn/history-note/blob/main/src/asset/screenshot.jpg)
+![screenshot](https://raw.githubusercontent.com/nepikn/history-note/main/src/asset/screenshot.jpg)
 
-[Live Demo](https://nepikn.github.io/history-note/)
+> [Live Demo](https://nepikn.github.io/history-note/)
 
 ## 主要技術
 
